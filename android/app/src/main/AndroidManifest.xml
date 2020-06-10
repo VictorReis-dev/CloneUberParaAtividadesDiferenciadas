@@ -8,7 +8,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="suruber"
-        android:icon="@mipmap/suruber-logo">
+        android:icon="@mipmap/suruber_logo">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

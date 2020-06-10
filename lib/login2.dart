@@ -41,7 +41,7 @@ class _Login2State extends State<Login2> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 225),
+                    padding: const EdgeInsets.only(left: 40),
                     child: Row(
                       children: <Widget>[
                         DropdownButtonHideUnderline(
@@ -85,19 +85,20 @@ class _Login2State extends State<Login2> {
                             style: TextStyle(color: Colors.black),
                           ),
                         ),
+                        SizedBox(width: 10),
                         Container(
-                          width: 300,
+                          width: 250,
                           height: 30,
                           child: Form(
                             key: _chave,
                             child: TextFormField(
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   labelText: 'Insira o número de celular',
                                   labelStyle: TextStyle(
-                                      fontSize: 16, color: Colors.black),
+                                      fontSize: 16, color: Colors.grey),
                                 ),
                                 controller: telefone,
                                 validator: (value) {

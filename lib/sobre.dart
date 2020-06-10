@@ -11,13 +11,13 @@ class Sobre extends StatelessWidget {
         title: Text('Sobre'),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 200, vertical: 20),
+        padding: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
                 Image(
-                  image: AssetImage("imagens/victor.jpg"),
+                  image: AssetImage("assets/imagens/victor.jpg"),
                   height: 100,
                   width: 100,
                 ),
@@ -28,7 +28,7 @@ class Sobre extends StatelessWidget {
             Row(
               children: <Widget>[
                 Image(
-                  image: AssetImage("imagens/lucas.jpg"),
+                  image: AssetImage("assets/imagens/lucas.jpg"),
                   height: 100,
                   width: 100,
                 ),

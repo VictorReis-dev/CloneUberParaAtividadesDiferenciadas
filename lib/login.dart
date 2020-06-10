@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 225),
+                    padding: const EdgeInsets.only(left: 50),
                     child: Row(
                       children: <Widget>[
                         DropdownButtonHideUnderline(
@@ -157,7 +157,7 @@ class _LoginState extends State<Login> {
                         style: TextStyle(color: Colors.blue),
                       ),
                       onTap: () {
-                        print('oi');
+                        print('Em desenvolvimento');
                       },
                     ),
                   ),
@@ -165,15 +165,18 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 50),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.only(right: 700),
-                    child: InkWell(
-                      child: Text(
-                        'Sobre',
-                        style: TextStyle(color: Colors.blue),
+                    height: 20,
+                    padding: EdgeInsets.only(right: 10),
+                    child: Center(
+                      child: InkWell(
+                        child: Text(
+                          'Sobre',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed((context), '/sobre');
+                        },
                       ),
-                      onTap: () {
-                        Navigator.pushNamed((context), '/sobre');
-                      },
                     ),
                   ),
                 ),
