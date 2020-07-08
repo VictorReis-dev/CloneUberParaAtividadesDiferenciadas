@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1010337169857",
+    "firebase_url": "https://projeto-rebu.firebaseio.com",
+    "project_id": "projeto-rebu",
+    "storage_bucket": "projeto-rebu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010337169857:android:6c4d6a2ff1383ea42baf40",
+        "android_client_info": {
+          "package_name": "com.example.suruber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010337169857-7kk26t6p4qln9q8dp8n0c887qhmss5sg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy-XDbdDGbZkE4qsUKjGSQa-rEMFY1yqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010337169857-7kk26t6p4qln9q8dp8n0c887qhmss5sg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
