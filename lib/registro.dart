@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:suruber/testeCRUD.dart';
 import 'package:provider/provider.dart';
-import 'package:suruber/usuarios.dart';
+import 'package:suruber/lista-usuarios.dart';
 
 class Registro extends StatefulWidget {
   final String titulo;
@@ -15,6 +15,8 @@ class _RegistroState extends State<Registro> {
   GlobalKey<FormState> _chave = GlobalKey<FormState>();
   TextEditingController txtUsuario = TextEditingController();
   TextEditingController txtSenha = TextEditingController();
+  TextEditingController txtNome = TextEditingController();
+  TextEditingController txtTelefone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,8 @@ class _RegistroState extends State<Registro> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _logoImagem('assets/imagens/rebu-logo.jpeg'),
+              _campoUsuario('Nome', txtNome),
+              _campoUsuario('Telefone', txtTelefone),
               _campoUsuario('Usuário', txtUsuario),
               _campoSenha('Senha', txtSenha),
               _botaoSalvar(context),
@@ -68,7 +72,7 @@ class _RegistroState extends State<Registro> {
         ),
         controller: controle,
         validator: (value) {
-          return (value.isEmpty) ? "Usuário inválido" : null;
+          return (value.isEmpty) ? "Campo obrigatório" : null;
         },
       ),
     );
@@ -115,8 +119,8 @@ class _RegistroState extends State<Registro> {
                   debugPrint('Nome de usuário já está sendo utilizado!');
                 } else {
                   debugPrint('Usuario cadastrado com sucesso');
-                  Usuarios novoUsuario =
-                      Usuarios(txtUsuario.text, txtUsuario.text, txtSenha.text);
+                  Usuarios novoUsuario = Usuarios(txtUsuario.text, txtNome.text,
+                      txtSenha.text, txtTelefone.text);
                   verificaUsuario.adicionarUsuario(novoUsuario);
                   Navigator.pushReplacementNamed(context, '/login');
                 }

@@ -1,57 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:suruber/api.dart';
-import 'package:suruber/testeCRUD.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'motoristas.dart';
+//Lista de motoristas disponiveis nas viagens
+class Motoristas {
+  //
+  //atributos que serão salvos na lsita
+  String _id;
+  String _nomeMotorista;
+  String _precoPago;
+  String _modeloCarro;
 
-class ListaMotorista extends StatefulWidget {
-  @override
-  _ListaMotoristaState createState() => _ListaMotoristaState();
-}
+  Motoristas(this._id, this._nomeMotorista, this._precoPago, this._modeloCarro);
 
-class _ListaMotoristaState extends State<ListaMotorista> {
-  List<Motoristas> motoristas;
-  Api api = Api('Motoristas');
-  @override
-  Widget build(BuildContext context) {
-    CRUDteste moto = CRUDteste();
-    moto.api2 = api;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Motoristas'),
-        backgroundColor: Colors.black,
-      ),
-      body: Container(
-        child: StreamBuilder(
-          stream: moto.buscarViagensAsStream(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
-              motoristas = snapshot.data.documents
-                  .map((doc) => Motoristas.fromMap(doc.data, doc.documentID))
-                  .toList();
-              return ListView.builder(
-                itemCount: motoristas.length,
-                itemBuilder: (buildContext, index) => Card(
-                  child: ListTile(
-                    title: Text("Nome: " + motoristas[index].localDestino),
-                    subtitle: Text("Carro: " +
-                        motoristas[index].nomeMotorista +
-                        "\nValor: " +
-                        motoristas[index].precoPago),
-                    onTap: () {},
-                  ),
-                ),
-              );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.black,
-                ),
-              );
-            }
-          },
-        ),
-      ),
-    );
+  String get id => _id;
+  String get nomeMotorista => _nomeMotorista;
+  String get precoPago => _precoPago;
+  String get modeloCarro => _modeloCarro;
+
+  Motoristas.fromMap(Map motorista, String id)
+      : this._id = id ?? '',
+        this._nomeMotorista = motorista['motorista'],
+        this._precoPago = motorista['valor'],
+        this._modeloCarro = motorista['carro'];
+
+  toJson() {
+    return {
+      "id": _id,
+      "motorista": _nomeMotorista,
+      "valor": _precoPago,
+      "carro": _modeloCarro,
+    };
   }
 }

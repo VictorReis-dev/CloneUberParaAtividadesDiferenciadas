@@ -8,7 +8,7 @@ class ListaViagens {
   String _localDestino;
 
   ListaViagens(
-      this._id, this._nomeMotorista, this._precoPago, this._localDestino);
+      this._nomeMotorista, this._precoPago, this._localDestino);
 
   String get id => _id;
   String get nomeMotorista => _nomeMotorista;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'editar_perfil.dart';
 
 class Perfil extends StatefulWidget {
   final List argumentos;
@@ -39,11 +40,18 @@ class _PerfilState extends State<Perfil> {
                 color: Colors.black,
                 size: 100,
               ),
-              title: Text(widget.argumentos[0]),
-              subtitle: Text('(16)9.9876-5432'),
+              title: Text(widget.argumentos[2].nome),
+              subtitle: Text(widget.argumentos[2].telefone),
               trailing: IconButton(
                 icon: Icon(Icons.edit, color: Colors.black, size: 35),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditarPerfil(widget.argumentos),
+                    ),
+                  );
+                },
               ),
             ),
             Container(

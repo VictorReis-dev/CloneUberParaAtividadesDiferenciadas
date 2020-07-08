@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:suruber/lista-motoristas.dart';
+import 'package:suruber/motoristas.dart';
 import 'package:suruber/testeCRUD.dart';
 import 'bottommenu.dart';
 import 'detetive.dart';
@@ -8,6 +8,7 @@ import 'load.dart';
 import 'login.dart';
 import 'registro.dart';
 import 'sobre.dart';
+import 'editar_perfil.dart';
 
 void main() {
   detetiveSetup("Usuarios");

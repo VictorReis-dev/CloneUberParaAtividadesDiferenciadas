@@ -14,21 +14,25 @@ class _ViagensState extends State<Viagens> {
   Api api = Api('Historico');
   @override
   Widget build(BuildContext context) {
-    CRUDteste batata = CRUDteste();
-    batata.api2 = api;
+    CRUDteste crudViagem = CRUDteste();
+    crudViagem.api2 = api;
     //final dadosViagem = Provider.of<CRUDteste>(context);
     return Scaffold(
       body: Container(
         child: StreamBuilder(
-          stream: batata.buscarViagensAsStream(),
+          stream: crudViagem.buscarViagensAsStream(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               viagens = snapshot.data.documents
-                  .map((doc) => ListaViagens.fromMap(doc.data, doc.documentID))
+                  .map(
+                    (doc) => ListaViagens.fromMap(doc.data, doc.documentID),
+                  )
                   .toList();
               return ListView.builder(
                 itemCount: viagens.length,
-                itemBuilder: (buildContext, index) => Card(
+                itemBuilder: (buildContext, index) => Dismissible(
+                  direction: DismissDirection.endToStart,
+                  key: Key(index.toString()),
                   child: ListTile(
                     title: Text("Destino: " + viagens[index].localDestino),
                     subtitle: Text("Motorista: " +
@@ -37,6 +41,17 @@ class _ViagensState extends State<Viagens> {
                         viagens[index].precoPago),
                     onTap: () {},
                   ),
+                  background: Container(
+                    child: Text(
+                      'Excluir     ',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    alignment: Alignment.centerRight,
+                    color: Colors.red,
+                  ),
+                  onDismissed: (direction) {
+                    crudViagem.removerViagem(viagens[index].id);
+                  },
                 ),
               );
             } else {

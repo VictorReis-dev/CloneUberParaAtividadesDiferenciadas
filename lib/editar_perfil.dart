@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:suruber/testeCRUD.dart';
 import 'package:provider/provider.dart';
+import 'api.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'lista-usuarios.dart';
 
-class Login extends StatefulWidget {
+class EditarPerfil extends StatefulWidget {
+  final List argumentos;
+  EditarPerfil(this.argumentos);
+
   @override
-  _LoginState createState() => _LoginState();
+  _EditarPerfilState createState() => _EditarPerfilState();
 }
 
-class _LoginState extends State<Login> {
+class _EditarPerfilState extends State<EditarPerfil> {
   GlobalKey<FormState> _chave = GlobalKey<FormState>();
-  TextEditingController txtUsuario = TextEditingController();
-  TextEditingController txtSenha = TextEditingController();
+  TextEditingController txtNome = TextEditingController();
+
+  TextEditingController txtTelefone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Editar'),
+        backgroundColor: Colors.black,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(30),
         child: Form(
@@ -22,28 +33,28 @@ class _LoginState extends State<Login> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              _logoImagem('assets/imagens/rebu-logo.jpeg'),
-              _campoUsuario('Usuário', txtUsuario),
-              _campoSenha('Senha', txtSenha),
+              _logoImagem(),
+              _campoNome('Nome', txtNome, widget.argumentos),
+              _campoTelefone('Telefone', txtTelefone, widget.argumentos),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _botao(context, 'Entrar'),
-                  _botao(context, 'Registrar'),
+                  _botao(context, 'Salvar', widget.argumentos),
+                  _botao(context, 'Cancelar', widget.argumentos),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 150),
-                child: InkWell(
-                  child: Text(
-                    'Sobre',
-                    style: TextStyle(color: Colors.blue, fontSize: 18),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/sobre');
-                  },
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 150),
+              //   child: InkWell(
+              //     child: Text(
+              //       'Sobre',
+              //       style: TextStyle(color: Colors.blue, fontSize: 18),
+              //     ),
+              //     onTap: () {
+              //       Navigator.pushNamed(context, '/sobre');
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -51,19 +62,18 @@ class _LoginState extends State<Login> {
     );
   }
 
-  _logoImagem(imagem) {
+  _logoImagem() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10),
-      child: Image(
-        image: AssetImage(imagem),
-        width: 200.0,
-        height: 200.0,
-        //fit: BoxFit.fill,
+      child: Icon(
+        Icons.portrait,
+        size: 200,
       ),
     );
   }
 
-  _campoUsuario(label, controle) {
+  _campoNome(label, controle, argumentos) {
+    controle.text = argumentos[2].nome;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: TextFormField(
@@ -84,11 +94,11 @@ class _LoginState extends State<Login> {
     );
   }
 
-  _campoSenha(label, controle) {
+  _campoTelefone(label, controle, argumentos) {
+    controle.text = argumentos[2].telefone;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: TextFormField(
-        obscureText: true,
         cursorColor: Colors.black,
         style: TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
@@ -106,8 +116,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  _botao(BuildContext context, label) {
-    final verificaUsuario = Provider.of<CRUDteste>(context);
+  _botao(BuildContext context, label, argumentos) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
       child: RaisedButton(
@@ -117,31 +126,15 @@ class _LoginState extends State<Login> {
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         onPressed: () async {
-          if (label == 'Registrar') {
-            Navigator.pushNamed(context, '/registro');
-          } else if (label == 'Entrar') {
+          if (label == 'Cancelar') {
+            Navigator.of(context).pop();
+          } else if (label == 'Salvar') {
             if (_chave.currentState.validate()) {
-              verificaUsuario.pesquisarUsuario(txtUsuario.text).then(
-                (value) {
-                  if (value != null) {
-                    if (value.senha != txtSenha.text) {
-                      _erroDeLogin(context, 'Senha incorreta');
-                    } else {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        '/menu',
-                        arguments: [
-                          txtUsuario.text,
-                          verificaUsuario,
-                          value,
-                        ],
-                      );
-                    }
-                  } else {
-                    _erroDeLogin(context, 'Usuário não cadastrado');
-                  }
-                },
-              );
+              Usuarios alteraDados = Usuarios(argumentos[2].id, txtNome.text,
+                  argumentos[2].senha, txtTelefone.text);
+              argumentos[1].atualizarDados(alteraDados);
+              Navigator.pushReplacementNamed(context, '/menu',
+                  arguments: [argumentos[0], argumentos[1], alteraDados]);
             }
           }
         },
@@ -163,10 +156,7 @@ class _LoginState extends State<Login> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
-                'Ok',
-                style: TextStyle(color: Colors.black),
-              ),
+              child: Text('Ok'),
             ),
           ],
         );
@@ -174,3 +164,18 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+// verificaUsuario.pesquisarUsuario(widget.argumentos[0]).then(
+//   (value) {
+//     //   if (value != null) {
+//     //     if (value.senha != txtSenha.text) {
+//     //       _erroDeLogin(context, 'Senha incorreta');
+//     //     } else {
+//     //       Navigator.pushReplacementNamed(context, '/menu',
+//     //           arguments: [txtUsuario.text, verificaUsuario]);
+//     //     }
+//     //   } else {
+//     //     _erroDeLogin(context, 'Usuário não cadastrado');
+//     //   }
+//   },
+// );

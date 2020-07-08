@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:suruber/usuarios.dart';
+import 'package:suruber/lista-usuarios.dart';
 import 'detetive.dart';
 import 'lista-viagens.dart';
 import 'api.dart';
@@ -49,6 +49,12 @@ class CRUDteste extends ChangeNotifier {
   Future adicionarUsuario(Usuarios novoUsuario) async {
     var resultado =
         await _api.adicionarColecaoUser(novoUsuario.toJson(), novoUsuario.id);
+    return resultado;
+  }
+
+  Future atualizarDados(Usuarios atualizaDado) async {
+    var resultado =
+        await _api.atualizarDocumento(atualizaDado.toJson(), atualizaDado.id);
     return resultado;
   }
 
