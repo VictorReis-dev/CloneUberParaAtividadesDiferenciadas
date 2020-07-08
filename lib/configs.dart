@@ -6,15 +6,15 @@ class Configuracoes extends StatefulWidget {
 }
 
 class _ConfiguracoesState extends State<Configuracoes> {
-  
   bool switchNotificacao = true;
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Configurações')),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('Configurações'),
+      ),
       body: Container(
         child: ListView(
           reverse: false,
@@ -28,12 +28,11 @@ class _ConfiguracoesState extends State<Configuracoes> {
                     switchNotificacao = value;
                   });
                 },
-                activeTrackColor: Colors.blueAccent[200],
-                activeColor: Colors.blue,
+                activeTrackColor: Colors.grey,
+                activeColor: Colors.black,
               ),
               title: Text('Notificações'),
             ),
-            
           ],
         ),
       ),

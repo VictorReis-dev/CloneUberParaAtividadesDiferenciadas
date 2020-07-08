@@ -1,37 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:suruber/lista-motoristas.dart';
+import 'package:suruber/testeCRUD.dart';
+import 'bottommenu.dart';
+import 'detetive.dart';
+import 'load.dart';
 import 'login.dart';
-import 'login2.dart';
+import 'registro.dart';
 import 'sobre.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  detetiveSetup("Usuarios");
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  static List<String> paises = [
-    "https://www.pinclipart.com/picdir/middle/158-1582812_brasil-icons-icon-brasil-clipart.png",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/2000px-Flag_of_the_United_States.svg.png",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Pakistan_%28bordered%29.svg/1200px-Flag_of_Pakistan_%28bordered%29.svg.png"
-  ];
-  final String numero_ddi = "+55";
-  final String numero = '1';
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Suruber',
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/login1': (context) => Login(
-            titulo: 'Login',
-            bandeiras: paises,
-            numero_ddi: numero_ddi,
-            numero: numero),
-        '/login2': (context) => Login2(
-              titulo: 'Login',
-              bandeiras: paises,
-            ),
-        '/sobre': (context) => Sobre(),
-      },
-      initialRoute: '/login1',
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => detetive<CRUDteste>(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Suruber',
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/load': (context) => Load(),
+          '/login': (context) => Login(),
+          '/registro': (context) => Registro(),
+          '/sobre': (context) => Sobre(),
+          '/menu': (context) => BottomBar(),
+          '/motoristas': (context) => ListaMotorista(),
+        },
+        initialRoute: '/load',
+        //initialRoute: Navigator(context, "/load", arguments: "/login"),
+      ),
     );
   }
 }

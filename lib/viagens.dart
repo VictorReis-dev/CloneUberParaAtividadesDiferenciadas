@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:suruber/testeCRUD.dart';
+import 'api.dart';
+import 'lista-viagens.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Viagens extends StatefulWidget {
   @override
@@ -6,48 +10,43 @@ class Viagens extends StatefulWidget {
 }
 
 class _ViagensState extends State<Viagens> {
+  List<ListaViagens> viagens;
+  Api api = Api('Historico');
   @override
   Widget build(BuildContext context) {
+    CRUDteste batata = CRUDteste();
+    batata.api2 = api;
+    //final dadosViagem = Provider.of<CRUDteste>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Histórico',
-          style: TextStyle(
-            fontSize: 20, 
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
       body: Container(
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          reverse: false,
-          children: <Widget>[
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.directions_car),
-                title: Text('Rua: X'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.directions_car),
-                title: Text('Rua: A'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.directions_car),
-                title: Text('Rua: Y'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.directions_car),
-                title: Text('Rua: Z'),
-              ),
-            ),
-          ],
+        child: StreamBuilder(
+          stream: batata.buscarViagensAsStream(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              viagens = snapshot.data.documents
+                  .map((doc) => ListaViagens.fromMap(doc.data, doc.documentID))
+                  .toList();
+              return ListView.builder(
+                itemCount: viagens.length,
+                itemBuilder: (buildContext, index) => Card(
+                  child: ListTile(
+                    title: Text("Destino: " + viagens[index].localDestino),
+                    subtitle: Text("Motorista: " +
+                        viagens[index].nomeMotorista +
+                        "\nValor: " +
+                        viagens[index].precoPago),
+                    onTap: () {},
+                  ),
+                ),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.black,
+                ),
+              );
+            }
+          },
         ),
       ),
     );

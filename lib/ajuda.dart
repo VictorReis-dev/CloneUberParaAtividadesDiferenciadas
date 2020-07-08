@@ -10,9 +10,9 @@ class _AjudaState extends State<Ajuda> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Ajuda'),
       ),
-
       body: Container(
         child: ListView(
           reverse: false,

@@ -11,48 +11,53 @@ class _PrincipalState extends State<Principal> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Nova Viagem'),
+        backgroundColor: Colors.black,
       ),
       body: Container(
-        child: ListView(
-          reverse: false,
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-
-            Container(
-              child: Image(image: AssetImage('assets/imagens/mapa.png'), height: 300),
-              width: 500,
-            ),
-
-            Card(
-              child: ListTile(
-                leading:
-                    Icon(Icons.directions_car, color: Colors.blue, size: 40),
-                title: Text('João Silva'),
-                subtitle: Text('Gol'),
-              ),
-            ),
-
-            Card(
-              child: ListTile(
-                leading:
-                    Icon(Icons.directions_car, color: Colors.blue, size: 40),
-                title: Text('Marta Borges'),
-                subtitle: Text('Vectra'),
-              ),
-            ),
-
-            Card(
-              child: ListTile(
-                leading:
-                    Icon(Icons.directions_car, color: Colors.blue, size: 40),
-                title: Text('Robson Souza'),
-                subtitle: Text('C3'),
-              ),
-            ),
-            
-          ],
+        child: Image(
+          image: AssetImage('assets/imagens/mapa.png'),
+          fit: BoxFit.fill,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/motoristas');
+        },
+        backgroundColor: Colors.black,
+        child: Icon(Icons.add),
       ),
     );
   }
 }
+
+// StreamBuilder(
+//                 stream: moto.buscarViagensAsStream(),
+//                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//                   if (snapshot.hasData) {
+//                     motoristas = snapshot.data.documents
+//                         .map((doc) => (doc) =>
+//                             Motoristas.fromMap(doc.data, doc.documentID))
+//                         .toList();
+//                     return ListView.builder(
+//                       itemCount: motoristas.length,
+//                       itemBuilder: (buildContext, index) => Card(
+//                         child: ListTile(
+//                           title:
+//                               Text("Nome: " + motoristas[index].localDestino),
+//                           subtitle: Text("Carro: " +
+//                               motoristas[index].nomeMotorista +
+//                               "\nValor: " +
+//                               motoristas[index].precoPago),
+//                           onTap: () {},
+//                         ),
+//                       ),
+//                     );
+//                   } else {
+//                     return Center(
+//                       child: CircularProgressIndicator(
+//                         backgroundColor: Colors.black,
+//                       ),
+//                     );
+//                   }
+//                 },
+//               )

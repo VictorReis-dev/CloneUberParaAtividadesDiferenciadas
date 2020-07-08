@@ -12,16 +12,6 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int _menuSelecionado = 0;
 
-  List<Widget> _menuItens = <Widget>[
-    Perfil(),
-
-    Principal(),
-
-    Viagens(),
-
-    Configuracoes(),
-  ];
-
   void _itemSelecionado(int index) {
     setState(() {
       _menuSelecionado = index;
@@ -30,40 +20,40 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    List argumentos = ModalRoute.of(context).settings.arguments;
+    List<Widget> _menuItens = <Widget>[
+      Perfil(argumentos),
+      Principal(),
+      Viagens(),
+      Configuracoes(),
+    ];
     return Scaffold(
       body: Center(
         child: _menuItens.elementAt(_menuSelecionado),
       ),
       bottomNavigationBar: BottomNavigationBar(
-
-        unselectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
-
           BottomNavigationBarItem(
             icon: Icon(Icons.portrait),
             title: Text('Perfil'),
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_car),
             title: Text('Mapa'),
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             title: Text('Viagens'),
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             title: Text('Configurações'),
           ),
         ],
-
         currentIndex: _menuSelecionado,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.black,
         onTap: _itemSelecionado,
-
       ),
     );
   }
